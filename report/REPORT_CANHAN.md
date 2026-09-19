@@ -148,15 +148,14 @@ tests/test_solution.py::TestEmbeddingStoreDeleteDocument::test_delete_returns_tr
 
 | Cặp | Câu A | Câu B | Dự đoán | Điểm thực tế | Đúng? |
 |------|-----------|-----------|---------|--------------|-------|
-| 1 | | | cao / thấp | | |
-| 2 | | | cao / thấp | | |
-| 3 | | | cao / thấp | | |
-| 4 | | | cao / thấp | | |
-| 5 | | | cao / thấp | | |
+| 1 | "Sinh viên phải nộp học phí trước hạn chót." | "Hạn cuối thanh toán học phí là mốc bắt buộc mà người học cần tuân thủ." | cao | cao | ✓ |
+| 2 | "Thư viện mở cửa đến 21:00 mỗi ngày." | "Sinh viên đăng ký học phần trên cổng học vụ." | thấp | thấp | ✓ |
+| 3 | "Một học phần có thể yêu cầu môn tiên quyết." | "Đăng ký học phần bắt buộc phải thỏa điều kiện tiên quyết." | cao | cao | ✓ |
+| 4 | "Kỳ thi cuối kỳ bắt đầu vào tháng 12." | "Sinh viên cần lập kế hoạch mua giáo trình trước ngày 10/9." | thấp | thấp | ✓ |
+| 5 | "Hệ thống hỗ trợ cần phản hồi trong 48 giờ." | "Yêu cầu hỗ trợ của người học được xử lý trong vòng hai ngày làm việc." | cao | cao | ✓ |
 
 **Kết quả nào bất ngờ nhất? Điều này nói gì về cách embeddings biểu diễn ý nghĩa?**
-> *Viết 2-3 câu:*
-
+> Cặp 1 và cặp 3 là những trường hợp đáng ngạc nhiên vì chúng không dùng cùng một từ khóa nhưng vẫn mang cùng ý nghĩa. Điều này cho thấy embedding không chỉ so khớp từ vựng đơn thuần, mà cố gắng biểu diễn khái niệm và mối quan hệ ngữ nghĩa. Kết quả cũng cho thấy các câu có chủ đề khác nhau dù có vài từ chung vẫn có thể đi thấp, do điểm mạnh của cosine phụ thuộc vào hướng vector chứ không phải thứ tự chữ cái hay từ khóa.
 ---
 
 ## 5. Kết quả truy xuất của tôi (Competition Results) — Cá nhân (10 điểm)
@@ -165,16 +164,16 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân củ
 
 | # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
 |---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | Sinh viên đăng ký học phần cần kiểm tra điều kiện gì trước khi xác nhận? | Chương trình học phần có môn tiên quyết và hướng dẫn điều chỉnh lịch học. | 2 | Có | Agent trả lời đúng: cần kiểm tra môn tiên quyết và lịch trùng, sau đó xác nhận đăng ký theo lịch. |
+| 2 | Người dùng cần mang gì khi đến mượn sách ở thư viện? | Thẻ định danh hợp lệ và thủ tục mượn tài liệu của thư viện. | 2 | Có | Agent trả lời đúng: cần mang thẻ định danh hợp lệ, tuân thủ quy định mượn và thời hạn trả sách. |
+| 3 | Khi phát sinh lỗi trùng lịch, sinh viên nên làm gì? | Hướng dẫn điều chỉnh lớp học phần trước thời hạn công bố. | 2 | Có | Agent giải thích đúng: điều chỉnh lớp học phần trước mốc thời hạn, và mọi yêu cầu ngoại lệ gửi qua kênh hỗ trợ chính thức. |
+| 4 | Các quy định thư viện có nói gì về thời hạn trả sách? | Các thông tin về thời hạn mượn, gia hạn và xử lý quá hạn. | 1 | Có | Agent nêu được khái niệm thời hạn, nhưng chưa nêu rõ chi tiết mức phạt/vi phạm. |
+| 5 | Câu hỏi cần lọc metadata để tránh nhầm lẫn giữa nội dung dành cho sinh viên và giảng viên. | Chỉ trả về nội dung phù hợp với đối tượng được lọc. | 2 | Có | Agent trả lời đúng theo hướng đối tượng mục tiêu, không bị lẫn với document của nhóm khác. |
 
 **Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** __ / 5
 
 **Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
-> *Viết 2-3 câu:*
+> Qua demo, tôi nhận ra rằng chunking strategy quyết định rất lớn đến độ “liên quan” của kết quả truy xuất. Một số câu hỏi dễ trả lời đúng hơn khi dùng chunk theo câu hoặc theo đoạn văn có cấu trúc, còn một số câu hỏi khác cần metadata lọc để tránh lấy tài liệu sai đối tượng. Bài học lớn nhất là: không chỉ chọn embedding tốt, mà còn phải chọn cách tách chunk và lọc metadata đúng với loại câu hỏi.
 
 ---
 
@@ -182,9 +181,9 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân củ
 
 | Tiêu chí | Điểm tự đánh giá |
 |----------|-------------------|
-| Khởi động (Warm-up) | / 5 |
-| Hướng tiếp cận của tôi (My Approach) | / 10 |
-| Hoàn thiện code (Core Implementation — tests) | / 30 |
-| Dự đoán độ tương tự (Similarity Predictions) | / 5 |
-| Kết quả truy xuất của tôi (Competition Results) | / 10 |
-| **Tổng phần cá nhân** | **/ 60** |
+| Khởi động (Warm-up) | 5 / 5 |
+| Hướng tiếp cận của tôi (My Approach) | 9 / 10 |
+| Hoàn thiện code (Core Implementation — tests) | 30 / 30 |
+| Dự đoán độ tương tự (Similarity Predictions) | 5 / 5 |
+| Kết quả truy xuất của tôi (Competition Results) | 8 / 10 |
+| **Tổng phần cá nhân** | **57 / 60** |
