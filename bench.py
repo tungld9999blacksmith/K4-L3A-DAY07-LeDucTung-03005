@@ -76,7 +76,7 @@ class CachedEmbedder:
             pass
 
 
-BENCHMARK_QUERIES = [
+BENCHMARK_QUERIES =[
     {
         "id": 1,
         "query": "Mức học phí niêm yết một năm của chương trình Cử nhân Điều dưỡng tại VinUniversity là bao nhiêu và học phí này đã bao gồm những chi phí nào?",
@@ -113,6 +113,7 @@ BENCHMARK_QUERIES = [
         "gold_answer": "Với sinh viên bậc đại học (audience: student): VinUni không áp dụng học bổng nghiên cứu sinh tiến sĩ hay sinh hoạt phí hàng tháng này cho sinh viên cử nhân. Chính sách học bổng 100% học phí 4 năm đào tạo tiến sĩ kèm sinh hoạt phí nghiên cứu hàng tháng (Graduate Research Fellowship) chỉ áp dụng cho đối tượng nghiên cứu sinh tiến sĩ, giảng viên và cán bộ nghiên cứu học thuật (audience: faculty).",
     },
 ]
+
 
 
 def load_corpus() -> list[tuple[dict[str, str], str, str]]:

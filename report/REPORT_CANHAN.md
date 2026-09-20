@@ -148,14 +148,14 @@ tests/test_solution.py::TestEmbeddingStoreDeleteDocument::test_delete_returns_tr
 
 | Cặp | Câu A | Câu B | Dự đoán | Điểm thực tế | Đúng? |
 |------|-----------|-----------|---------|--------------|-------|
-| 1 | "Sinh viên phải nộp học phí trước hạn chót." | "Hạn cuối thanh toán học phí là mốc bắt buộc mà người học cần tuân thủ." | cao | cao | ✓ |
-| 2 | "Thư viện mở cửa đến 21:00 mỗi ngày." | "Sinh viên đăng ký học phần trên cổng học vụ." | thấp | thấp | ✓ |
-| 3 | "Một học phần có thể yêu cầu môn tiên quyết." | "Đăng ký học phần bắt buộc phải thỏa điều kiện tiên quyết." | cao | cao | ✓ |
-| 4 | "Kỳ thi cuối kỳ bắt đầu vào tháng 12." | "Sinh viên cần lập kế hoạch mua giáo trình trước ngày 10/9." | thấp | thấp | ✓ |
-| 5 | "Hệ thống hỗ trợ cần phản hồi trong 48 giờ." | "Yêu cầu hỗ trợ của người học được xử lý trong vòng hai ngày làm việc." | cao | cao | ✓ |
+| 1 | Học phí năm học 2026 của sinh viên đại học là bao nhiêu? | Mức tiền học của sinh viên khóa mới năm 2026 là bao nhiêu? | cao | 0.9136 | Đúng |
+| 2 | Thời hạn nộp tiền học kỳ mùa thu kết thúc vào ngày 15 tháng 10. | Hạn chót đóng học phí kỳ 1 là ngày 15/10/2024. | cao | 0.8833 | Đúng |
+| 3 | Trường hợp sinh viên rút học phần sẽ được hoàn trả 80% học phí. | Chính sách hoàn tiền khi sinh viên hủy đăng ký môn học trong tuần đầu. | cao | 0.8148 | Đúng |
+| 4 | Quy định biểu phí đào tạo và phương thức chuyển khoản ngân hàng. | Thực đơn món ăn trưa tại căng tin ký túc xá hôm nay. | thấp | 0.5897 | Đúng |
+| 5 | Điều kiện duy trì học bổng toàn phần yêu cầu điểm GPA tối thiểu 3.2. | Nhiệt độ ngoài trời tại Hà Nội hôm nay là 28 độ C. | thấp | 0.5192 | Đúng |
 
 **Kết quả nào bất ngờ nhất? Điều này nói gì về cách embeddings biểu diễn ý nghĩa?**
-> Cặp 1 và cặp 3 là những trường hợp đáng ngạc nhiên vì chúng không dùng cùng một từ khóa nhưng vẫn mang cùng ý nghĩa. Điều này cho thấy embedding không chỉ so khớp từ vựng đơn thuần, mà cố gắng biểu diễn khái niệm và mối quan hệ ngữ nghĩa. Kết quả cũng cho thấy các câu có chủ đề khác nhau dù có vài từ chung vẫn có thể đi thấp, do điểm mạnh của cosine phụ thuộc vào hướng vector chứ không phải thứ tự chữ cái hay từ khóa.
+> Điểm số ở cặp 4 và 5 tuy "thấp" tương đối nhưng vẫn đạt ngưỡng ~0.52 - 0.58 chứ không về 0. Điều này cho thấy các mô hình Dense Embedding hiện đại ánh xạ văn bản vào một không gian phân bố dày đặc, nơi các câu đều chia sẻ những thành phần ngữ pháp chung của ngôn ngữ tự nhiên. Tuy nhiên, khoảng cách phân tách giữa cặp tương đồng (0.81 - 0.91) và cặp dị biệt (0.51 - 0.58) đủ lớn để thuật toán cosine ranking phân loại chính xác.
 ---
 
 ## 5. Kết quả truy xuất của tôi (Competition Results) — Cá nhân (10 điểm)
@@ -163,14 +163,14 @@ tests/test_solution.py::TestEmbeddingStoreDeleteDocument::test_delete_returns_tr
 Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân của bạn trong gói `src`. **5 câu hỏi này phải trùng với các thành viên cùng nhóm** (xem `REPORT_NHOM.md`).
 
 | # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
-|---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | Sinh viên đăng ký học phần cần kiểm tra điều kiện gì trước khi xác nhận? | Chương trình học phần có môn tiên quyết và hướng dẫn điều chỉnh lịch học. | 2 | Có | Agent trả lời đúng: cần kiểm tra môn tiên quyết và lịch trùng, sau đó xác nhận đăng ký theo lịch. |
-| 2 | Người dùng cần mang gì khi đến mượn sách ở thư viện? | Thẻ định danh hợp lệ và thủ tục mượn tài liệu của thư viện. | 2 | Có | Agent trả lời đúng: cần mang thẻ định danh hợp lệ, tuân thủ quy định mượn và thời hạn trả sách. |
-| 3 | Khi phát sinh lỗi trùng lịch, sinh viên nên làm gì? | Hướng dẫn điều chỉnh lớp học phần trước thời hạn công bố. | 2 | Có | Agent giải thích đúng: điều chỉnh lớp học phần trước mốc thời hạn, và mọi yêu cầu ngoại lệ gửi qua kênh hỗ trợ chính thức. |
-| 4 | Các quy định thư viện có nói gì về thời hạn trả sách? | Các thông tin về thời hạn mượn, gia hạn và xử lý quá hạn. | 1 | Có | Agent nêu được khái niệm thời hạn, nhưng chưa nêu rõ chi tiết mức phạt/vi phạm. |
-| 5 | Câu hỏi cần lọc metadata để tránh nhầm lẫn giữa nội dung dành cho sinh viên và giảng viên. | Chỉ trả về nội dung phù hợp với đối tượng được lọc. | 2 | Có | Agent trả lời đúng theo hướng đối tượng mục tiêu, không bị lẫn với document của nhóm khác. |
+|---:|---|---|---:|---|---|
+| 1 | Trong năm học 2026–2027, học phí niêm yết mỗi tín chỉ của chương trình Cử nhân Điều dưỡng, Bác sĩ Y khoa và các ngành cử nhân khác lần lượt là bao nhiêu? | Bảng học phí cử nhân năm học 2026–2027, nêu học phí theo tín chỉ của Điều dưỡng, Bác sĩ Y khoa và các ngành cử nhân khác. | 2 | Có | Agent trả lời đúng: Điều dưỡng là **9.780.000 VNĐ/tín chỉ**; Bác sĩ Y khoa và các ngành cử nhân khác là **27.195.000 VNĐ/tín chỉ**. |
+| 2 | Sinh viên VinUni được hưởng khoản hỗ trợ 35% học phí từ Tập đoàn Vingroup trong thời gian bao lâu và khoản hỗ trợ này bao gồm những đối tượng nào? | Chính sách hỗ trợ 35% học phí của Nhà sáng lập, áp dụng cho sinh viên trúng tuyển nhập học trong toàn bộ thời gian học chính khóa. | 2 | Có | Agent trả lời đúng: Khoản hỗ trợ được duy trì **cố định và liên tục trong toàn bộ thời gian học chính khóa**, áp dụng cho cả sinh viên Việt Nam và sinh viên quốc tế. |
+| 3 | Nghiên cứu sinh Tiến sĩ Khoa học Máy tính tại VinUni phải trả tổng học phí bao nhiêu cho toàn khóa 4 năm và có thể nhận được những quyền lợi học bổng nào? | Tài liệu học phí sau đại học, nêu tổng học phí chương trình PhD Khoa học Máy tính và chính sách học bổng nghiên cứu sinh. | 2 | Có | Agent trả lời đúng: Tổng học phí là **3.729.600.000 VNĐ/4 năm**. Nghiên cứu sinh đạt chuẩn có thể nhận **học bổng 100% học phí**, sinh hoạt phí nghiên cứu hàng tháng và bảo hiểm y tế khi tham gia TA hoặc RA. |
+| 4 | Nếu sinh viên VinUni nộp đơn xin thôi học trong tuần thứ 3 của học kỳ hoặc sau tuần thứ 4, sinh viên được hoàn trả bao nhiêu phần trăm học phí thực đóng? | Chính sách hoàn phí theo thời điểm rút hồ sơ: 50% trước hoặc trong tuần thứ 4 và 0% sau tuần thứ 4. | 2 | Có | Agent trả lời đúng: Nộp đơn trong **tuần thứ 3** được hoàn **50% học phí thực đóng**; nộp sau tuần thứ 4 thì **không được hoàn trả**, tương đương 0%. |
+| 5 | Khi chuyển khoản học phí bằng Việt Nam Đồng, sinh viên cần chuyển tiền đến tài khoản nào và phải ghi những thông tin gì trong nội dung chuyển khoản? | Quy định chuyển khoản VND, nêu tên đơn vị thụ hưởng, số tài khoản, ngân hàng và nội dung chuyển khoản bắt buộc. | 2 | Có | Agent trả lời đúng: Chuyển vào tài khoản **19034362262995** của **Công ty TNHH Giáo dục và Đào tạo VinAcademy** tại **Techcombank – Hội sở chính**; nội dung phải gồm **Mã số sinh viên, Họ tên sinh viên và mô tả khoản nộp**. |
 
-**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** __ / 5
+**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** 5 / 5 (100%)
 
 **Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
 > Qua demo, tôi nhận ra rằng chunking strategy quyết định rất lớn đến độ “liên quan” của kết quả truy xuất. Một số câu hỏi dễ trả lời đúng hơn khi dùng chunk theo câu hoặc theo đoạn văn có cấu trúc, còn một số câu hỏi khác cần metadata lọc để tránh lấy tài liệu sai đối tượng. Bài học lớn nhất là: không chỉ chọn embedding tốt, mà còn phải chọn cách tách chunk và lọc metadata đúng với loại câu hỏi.
